@@ -571,6 +571,7 @@ void NotationParts::replaceInstrument(const InstrumentKey& instrumentKey, const 
     TRACEFUNC;
 
     Part* part = partModifiable(instrumentKey.partId);
+    QString newInstrumentPartName = notation::formatInstrumentTitle(newInstrument.trackName(), newInstrument.trait());
     if (!part) {
         return;
     }
@@ -578,7 +579,7 @@ void NotationParts::replaceInstrument(const InstrumentKey& instrumentKey, const 
     startEdit();
 
     score()->undo(new Ms::ChangePart(part, new Ms::Instrument(newInstrument),
-                                     formatPartTitle(part)));
+                                     newInstrumentPartName));
 
     apply();
 
