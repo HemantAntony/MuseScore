@@ -48,12 +48,9 @@ static QString notationToKey(const INotationPtr notation)
 }
 
 InstrumentsPanelTreeModel::InstrumentsPanelTreeModel(QObject* parent)
-    : QAbstractItemModel(parent)
+    : QAbstractItemModel(parent), m_selectionModel(new ItemMultiSelectionModel(this))
 {
     m_partsNotifyReceiver = std::make_shared<async::Asyncable>();
-
-    m_selectionModel = new ItemMultiSelectionModel(this);
-    m_selectionModel->setAllowedModifiers(Qt::ShiftModifier);
 
     connect(m_selectionModel, &ItemMultiSelectionModel::selectionChanged,
             [this](const QItemSelection& selected, const QItemSelection& deselected) {
