@@ -50,6 +50,8 @@ Item {
     signal popupOpened(var popupX, var popupY, var popupHeight)
     signal popupClosed()
 
+    signal visibilityChanged()
+
     QtObject {
         id: prv
 
@@ -304,8 +306,11 @@ Item {
                 if (!model) {
                     return
                 }
-
-                model.itemRole.isVisible = !isVisible
+                if (root.isSelected) {
+                    root.visibilityChanged()
+                } else {
+                    model.itemRole.isVisible = !isVisible
+                }
             }
         }
 

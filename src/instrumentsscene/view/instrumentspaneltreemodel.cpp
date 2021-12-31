@@ -433,6 +433,30 @@ bool InstrumentsPanelTreeModel::moveRows(const QModelIndex& sourceParent, int so
     return true;
 }
 
+void InstrumentsPanelTreeModel::changeVisibilityOfSelectedRows() {
+    if (!m_selectionModel || !m_selectionModel->hasSelection()) {
+        return;
+    }
+
+    QModelIndexList selectedIndexes = m_selectionModel->selectedIndexes();
+    int hiddenItems = 0, visibleItems = 0;
+    bool toVisible = true;
+
+    for (QModelIndex index : selectedIndexes) {
+        AbstractInstrumentsPanelTreeItem* item = modelIndexToItem(index);
+        item->isVisible()? visibleItems++ : hiddenItems++;
+    }
+
+    if (visibleItems > hiddenItems) {
+        toVisible = false;
+    }
+
+    for (QModelIndex index : selectedIndexes) {
+        AbstractInstrumentsPanelTreeItem* item = modelIndexToItem(index);
+        item->setIsVisible(toVisible);
+    }
+}
+
 QItemSelectionModel* InstrumentsPanelTreeModel::selectionModel() const
 {
     return m_selectionModel;

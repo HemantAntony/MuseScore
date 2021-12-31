@@ -276,6 +276,10 @@ Item {
                                 onPopupClosed: {
                                     flickable.contentY = contentYBackup
                                 }
+
+                                onVisibilityChanged: {
+                                    instrumentsTreeModel.changeVisibilityOfSelectedRows();
+                                }
                             }
                         }
 
