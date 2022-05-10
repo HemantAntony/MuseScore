@@ -1316,11 +1316,7 @@ bool NotationInteraction::drop(const PointF& pos, Qt::KeyboardModifiers modifier
 
         EngravingItem* dropElement = el->drop(m_dropData.ed);
         if (dropElement && dropElement->isInstrumentChange()) {
-            if (!selectInstrument(toInstrumentChange(dropElement))) {
-                rollback();
-                accepted = true;
-                break;
-            }
+            selectInstrument(toInstrumentChange(dropElement));
         }
         score()->addRefresh(el->canvasBoundingRect());
         if (dropElement) {
@@ -1360,21 +1356,19 @@ bool NotationInteraction::drop(const PointF& pos, Qt::KeyboardModifiers modifier
     return accepted;
 }
 
-bool NotationInteraction::selectInstrument(Ms::InstrumentChange* instrumentChange)
+void NotationInteraction::selectInstrument(Ms::InstrumentChange* instrumentChange)
 {
     if (!instrumentChange) {
-        return false;
+        return;
     }
 
     RetVal<Instrument> selectedInstrument = selectInstrumentScenario()->selectInstrument();
     if (!selectedInstrument.ret) {
-        return false;
+        return;
     }
 
     instrumentChange->setInit(true);
     instrumentChange->setupInstrument(&selectedInstrument.val);
-
-    return true;
 }
 
 //! NOTE Copied from Palette::applyPaletteElement
@@ -1725,10 +1719,7 @@ void NotationInteraction::applyDropPaletteElement(Ms::Score* score, Ms::Engravin
 
         Ms::EngravingItem* el = target->drop(*dropData);
         if (el && el->isInstrumentChange()) {
-            if (!selectInstrument(toInstrumentChange(el))) {
-                rollback();
-                return;
-            }
+            selectInstrument(toInstrumentChange(el));
         }
 
         if (el && !score->inputState().noteEntryMode()) {
