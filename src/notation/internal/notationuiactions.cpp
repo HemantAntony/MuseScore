@@ -1601,6 +1601,12 @@ const UiActionList NotationUiActions::m_noteInputActions = {
              QT_TRANSLATE_NOOP("action", "Insert notes by increasing measure duration"),
              IconCode::Code::NOTE_PLUS
              ),
+    UiAction("highlight",
+             mu::context::UiCtxNotationOpened,
+             QT_TRANSLATE_NOOP("action", "Highlight"),
+             QT_TRANSLATE_NOOP("action", "Highlight staves"),
+             IconCode::Code::EDIT
+             ),
     UiAction("note-longa",
              mu::context::UiCtxNotationOpened,
              QT_TRANSLATE_NOOP("action", "Longa"),
@@ -2126,6 +2132,7 @@ const mu::ui::ToolConfig& NotationUiActions::defaultNoteInputBarConfig()
     if (!config.isValid()) {
         config.items = {
             { "note-input", true },
+            { "highlight", true },
             { "pad-note-1024", false },
             { "pad-note-512", false },
             { "pad-note-256", false },

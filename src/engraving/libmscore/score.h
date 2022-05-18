@@ -634,6 +634,7 @@ public:
     void cmdUnsetVisible();
     void cmdMoveRest(Rest*, DirectionV);
     void cmdMoveLyrics(Lyrics*, DirectionV);
+    void cmdHighlightSelection();
 
     void addRemoveBreaks(int interval, bool lock);
 

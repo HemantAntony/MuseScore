@@ -119,6 +119,8 @@ mu::Ret WorkspaceFile::save()
     zip.close();
 
     Ret ret = fileSystem()->writeFile(m_filePath, ByteArray::fromQByteArrayNoCopy(data));
+    LOGI() << m_filePath;
+
     if (!ret) {
         LOGE() << "failed write to file, err: " << ret.toString();
     }

@@ -983,6 +983,7 @@ void LayoutSystem::layoutSystemElements(const LayoutOptions& options, LayoutCont
     std::vector<Spanner*> ottavas;
     std::vector<Spanner*> pedal;
     std::vector<Spanner*> voltas;
+    std::vector<Spanner*> highlights;
     std::vector<Spanner*> tempoChangeLines;
 
     for (auto interval : spanners) {
@@ -1000,6 +1001,8 @@ void LayoutSystem::layoutSystemElements(const LayoutOptions& options, LayoutCont
                 voltas.push_back(sp);
             } else if (sp->isHairpin()) {
                 hairpins.push_back(sp);
+            } else if (sp->isHighlight()) {
+                highlights.push_back(sp);
             } else if (sp->isGradualTempoChange()) {
                 tempoChangeLines.push_back(sp);
             } else if (!sp->isSlur() && !sp->isVolta()) {      // slurs are already
@@ -1008,7 +1011,8 @@ void LayoutSystem::layoutSystemElements(const LayoutOptions& options, LayoutCont
         }
     }
     processLines(system, hairpins, false);
-    processLines(system, tempoChangeLines, false);
+    processLines(system, tempoChangeLines, false); //Check this out. This is new code. Also check grace notes group. its a new element
+    processLines(system, highlights, false); //Here?
     processLines(system, spanner, false);
 
     //-------------------------------------------------------------
@@ -1232,6 +1236,9 @@ void LayoutSystem::processLines(System* system, std::vector<Spanner*> lines, boo
     std::vector<SpannerSegment*> segments;
     for (Spanner* sp : lines) {
         SpannerSegment* ss = sp->layoutSystem(system);         // create/layout spanner segment for this system
+//        LOGI() << "Here1";
+//        LOGI() << ss->autoplace();
+//        LOGI() << "Here2";
         if (ss->autoplace()) {
             segments.push_back(ss);
         }

@@ -78,6 +78,8 @@ void NotationActionController::init()
     registerNoteInputAction("note-input-realtime-manual", NoteInputMethod::REALTIME_MANUAL);
     registerNoteInputAction("note-input-timewise", NoteInputMethod::TIMEWISE);
 
+    registerAction("highlight", &Controller::highlight);
+
     registerPadNoteAction("note-longa", Pad::NOTE00);
     registerPadNoteAction("note-breve", Pad::NOTE0);
     registerPadNoteAction("pad-note-1", Pad::NOTE1);
@@ -1060,6 +1062,17 @@ void NotationActionController::addSlur()
     } else {
         interaction->addSlurToSelection();
     }
+}
+
+void NotationActionController::highlight()
+{
+    TRACEFUNC;
+    auto interaction = currentNotationInteraction();
+    if (!interaction) {
+        return;
+    }
+
+    interaction->highlightSelection();
 }
 
 IInteractive::Result NotationActionController::showErrorMessage(const std::string& message) const

@@ -53,6 +53,9 @@ void Paint::paintElements(mu::draw::Painter& painter, const std::vector<Engravin
     std::sort(sortedElements.begin(), sortedElements.end(), mu::engraving::elementLessThan);
 
     for (const EngravingItem* element : sortedElements) {
+        if (QString(element->typeName()) == "Highlight") {
+            LOGI() << "SUCCESS - HIGHLIGHT HAS BEEN CREATED";
+        }
         if (!element->isInteractionAvailable()) {
             continue;
         }

@@ -239,6 +239,11 @@ void EngravingObject::resetExplicitParent()
 
 Score* EngravingObject::score() const
 {
+//    if (m_score) {
+//        LOGI() << "Here3";
+//    } else {
+//        LOGI() << "Here4";
+//    }
     return m_score;
 }
 

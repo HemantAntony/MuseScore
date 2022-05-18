@@ -1406,6 +1406,10 @@ void collectElements(void* data, EngravingItem* e)
 
 bool EngravingItem::autoplace() const
 {
+//    LOGI() << (MStyle::valueType(Sid::autoplaceEnabled) == mu::engraving::P_TYPE::BOOL);
+    LOGI() << "Here1";
+    Q_ASSERT(MStyle::valueType(Sid::autoplaceEnabled) == mu::engraving::P_TYPE::BOOL);
+    LOGI() << "Here2";
     if (!score() || !score()->styleB(Sid::autoplaceEnabled)) {
         return false;
     }

@@ -3641,6 +3641,17 @@ void NotationInteraction::addBeamToSelectedChordRests(BeamMode mode)
     apply();
 }
 
+void NotationInteraction::highlightSelection()
+{
+    if (selection()->isNone()) {
+        return;
+    }
+
+    startEdit();
+    score()->cmdHighlightSelection();
+    apply();
+}
+
 void NotationInteraction::increaseDecreaseDuration(int steps, bool stepByDots)
 {
     if (selection()->isNone()) {

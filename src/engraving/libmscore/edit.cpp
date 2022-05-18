@@ -41,6 +41,7 @@
 #include "glissando.h"
 #include "hairpin.h"
 #include "harmony.h"
+#include "highlight.h"
 #include "hook.h"
 #include "image.h"
 #include "instrumentname.h"
@@ -2052,6 +2053,34 @@ void Score::cmdSetBeamMode(BeamMode mode)
             cr->undoChangeProperty(Pid::BEAM_MODE, mode);
         }
     }
+}
+
+//---------------------------------------------------------
+//   cmdHighlightStaves
+//---------------------------------------------------------
+
+void Score::cmdHighlightSelection()
+{
+    const std::vector<EngravingItem*> selectedElements = selection().elements();
+
+    EngravingItem* firstElement = selectedElements.at(0);
+    EngravingItem* finalElement = selectedElements.at(selectedElements.size() - 1);
+    for (EngravingItem* e : selectedElements) {
+        LOGI() << e->tick().toString();
+    }
+    Highlight* highlight = Factory::createHighlight(firstElement->score()->dummy());
+    highlight->setScore(firstElement->score());
+    highlight->setTick(firstElement->tick());
+    highlight->setTick2(finalElement->tick());
+    highlight->setTrack(firstElement->track());
+    highlight->setStartElement(firstElement);
+    highlight->setEndElement(finalElement);
+
+    firstElement->score()->undoAddElement(highlight);
+    HighlightSegment* highlightSegment = new HighlightSegment(firstElement->score()->dummy()->system());
+    highlightSegment->setSpannerSegmentType(SpannerSegmentType::SINGLE);
+
+    highlight->add(highlightSegment);
 }
 
 //---------------------------------------------------------
@@ -5334,7 +5363,8 @@ void Score::undoAddElement(EngravingItem* element, bool ctrlModifier)
             && et != ElementType::TREMOLOBAR
             && et != ElementType::FRET_DIAGRAM
             && et != ElementType::FERMATA
-            && et != ElementType::HARMONY)
+            && et != ElementType::HARMONY
+            && et != ElementType::HIGHLIGHT)
         ) {
         undo(new AddElement(element));
         return;
@@ -5561,7 +5591,8 @@ void Score::undoAddElement(EngravingItem* element, bool ctrlModifier)
                        || element->isTrill()
                        || element->isVibrato()
                        || element->isTextLine()
-                       || element->isPedal()) {
+                       || element->isPedal()
+                       || element->isHighlight()) {
                 Spanner* sp   = toSpanner(element);
                 Spanner* nsp  = toSpanner(ne);
                 staff_idx_t staffIdx1 = sp->track() / VOICES;

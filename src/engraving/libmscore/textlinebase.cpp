@@ -100,6 +100,7 @@ static std::vector<double> distributedDashPattern(double dash, double gap, doubl
 void TextLineBaseSegment::draw(mu::draw::Painter* painter) const
 {
     TRACE_OBJ_DRAW;
+    LOGI() << "Drawing a hairpin";
     using namespace mu::draw;
     TextLineBase* tl   = textLineBase();
 

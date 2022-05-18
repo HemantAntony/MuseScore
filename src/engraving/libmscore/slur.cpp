@@ -69,6 +69,7 @@ void SlurSegment::draw(mu::draw::Painter* painter) const
 {
     TRACE_OBJ_DRAW;
     using namespace mu::draw;
+
     Pen pen(curColor());
     double mag = staff() ? staff()->staffMag(slur()->tick()) : 1.0;
 
@@ -1564,6 +1565,7 @@ SpannerSegment* Slur::layoutSystem(System* system)
 
 void Slur::layout()
 {
+    LOGI() << "Slur layout";
     if (track2() == mu::nidx) {
         setTrack2(track());
     }

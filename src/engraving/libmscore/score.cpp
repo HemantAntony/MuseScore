@@ -1564,6 +1564,7 @@ void Score::addElement(EngravingItem* element)
     case ElementType::PEDAL:
     case ElementType::TEXTLINE:
     case ElementType::HAIRPIN:
+    case ElementType::HIGHLIGHT:
     case ElementType::LET_RING:
     case ElementType::GRADUAL_TEMPO_CHANGE:
     case ElementType::PALM_MUTE:

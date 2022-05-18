@@ -95,6 +95,7 @@
 #include "textframe.h"
 #include "tuplet.h"
 #include "tripletfeel.h"
+#include "highlight.h"
 
 #include "log.h"
 
@@ -199,6 +200,7 @@ EngravingItem* Factory::doCreateItem(ElementType type, EngravingItem* parent)
     case ElementType::AMBITUS:           return new Ambitus(parent->isSegment() ? toSegment(parent) : dummy->segment());
     case ElementType::STICKING:          return new Sticking(parent->isSegment() ? toSegment(parent) : dummy->segment());
     case ElementType::TRIPLET_FEEL:      return new TripletFeel(parent->isSegment() ? toSegment(parent) : dummy->segment());
+    case ElementType::HIGHLIGHT:         return new Highlight(parent);
 
     case ElementType::LYRICSLINE:
     case ElementType::TEXTLINE_BASE:
@@ -206,6 +208,7 @@ EngravingItem* Factory::doCreateItem(ElementType type, EngravingItem* parent)
     case ElementType::GLISSANDO_SEGMENT:
     case ElementType::SLUR_SEGMENT:
     case ElementType::TIE_SEGMENT:
+    case ElementType::HIGHLIGHT_SEGMENT:
     case ElementType::STEM_SLASH:
     case ElementType::PAGE:
     case ElementType::BEAM:
@@ -642,3 +645,5 @@ CREATE_ITEM_IMPL(HBox, ElementType::HBOX, System, isAccessibleEnabled)
 CREATE_ITEM_IMPL(TBox, ElementType::TBOX, System, isAccessibleEnabled)
 
 CREATE_ITEM_IMPL(FBox, ElementType::FBOX, System, isAccessibleEnabled)
+
+CREATE_ITEM_IMPL(Highlight, ElementType::HIGHLIGHT, EngravingItem, isAcessibleEnabled)

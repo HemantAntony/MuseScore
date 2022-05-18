@@ -92,6 +92,7 @@ class LyricsLineSegment;
 class Stem;
 class SlurSegment;
 class TieSegment;
+class HighlightSegment;
 class OttavaSegment;
 class Beam;
 class Hook;
@@ -151,6 +152,7 @@ class BSymbol;
 class TextLineBase;
 class TextLineBaseSegment;
 class Fermata;
+class Highlight;
 
 class LetRing;
 class LetRingSegment;
@@ -343,6 +345,7 @@ public:
     CONVERT(StemSlash,     STEM_SLASH)
     CONVERT(SlurSegment,   SLUR_SEGMENT)
     CONVERT(TieSegment,    TIE_SEGMENT)
+    CONVERT(HighlightSegment, HIGHLIGHT_SEGMENT)
     CONVERT(Spacer,        SPACER)
     CONVERT(StaffLines,    STAFF_LINES)
     CONVERT(Ambitus,       AMBITUS)
@@ -412,6 +415,7 @@ public:
     CONVERT(Lasso,         LASSO)
     CONVERT(Sticking,      STICKING)
     CONVERT(GraceNotesGroup, GRACE_NOTES_GROUP)
+    CONVERT(Highlight,     HIGHLIGHT)
 #undef CONVERT
 
     virtual bool isEngravingItem() const { return false; }   // overridden in element.h
@@ -452,7 +456,7 @@ public:
 
     bool isSpannerSegment() const
     {
-        return isLineSegment() || isTextLineBaseSegment() || isSlurSegment() || isTieSegment();
+        return isLineSegment() || isTextLineBaseSegment() || isSlurSegment() || isTieSegment() || isHighlightSegment();
     }
 
     bool isBSymbol() const { return isImage() || isSymbol(); }
@@ -486,6 +490,7 @@ public:
                || isLyricsLine()
                || isTextLineBase()
                || isSLine()
+               || isHighlight()
         ;
     }
 
@@ -670,6 +675,7 @@ CONVERT(StemSlash)
 CONVERT(LineSegment)
 CONVERT(SlurSegment)
 CONVERT(TieSegment)
+CONVERT(HighlightSegment)
 CONVERT(Spacer)
 CONVERT(StaffLines)
 CONVERT(Ambitus)
@@ -737,6 +743,7 @@ CONVERT(Lasso)
 CONVERT(BagpipeEmbellishment)
 CONVERT(Sticking)
 CONVERT(GraceNotesGroup)
+CONVERT(Highlight)
 #undef CONVERT
 }
 
