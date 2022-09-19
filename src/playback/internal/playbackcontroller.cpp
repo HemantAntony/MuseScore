@@ -345,8 +345,14 @@ void PlaybackController::onNotationChanged()
         updateMuteStates();
     });
 
+    for (const Part* part : partList) {
+        notationParts->staffList(part->id()).onItemChanged(this, [this](const Staff*) {
+            updateLoop();
+        });
+    }
+
     notationPlayback()->loopBoundariesChanged().onNotify(this, [this]() {
-        updateLoop();
+//        updateLoop();
     });
 
     m_notation->interaction()->selectionChanged().onNotify(this, [this]() {
@@ -640,6 +646,7 @@ void PlaybackController::updateLoop()
     playback()->player()->setLoop(m_currentSequenceId, fromMsesc, toMsecs);
 
     showLoop();
+    notationPlayback()->loopBoundariesChanged().notify();
 
     notifyActionCheckedChanged(LOOP_CODE);
 }
