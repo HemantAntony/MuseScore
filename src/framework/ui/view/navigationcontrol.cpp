@@ -101,6 +101,7 @@ QWindow* NavigationControl::window() const
 
 void NavigationControl::trigger()
 {
+    LOGI() << "GOING TO TRIGGER FOR " << name();
     emit triggered();
 }
 

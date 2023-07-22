@@ -64,6 +64,7 @@ FocusScope {
         }
 
         onTriggered: {
+            console.log("TRIGGER RECEIVED")
             root.navigationTriggered()
         }
     }
